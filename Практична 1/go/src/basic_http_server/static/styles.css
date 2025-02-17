@@ -1,0 +1,139 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .flex-bottom {
+    display: flex;
+    gap: 20px;
+  }
+  .card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  .form-group {
+    display: flex;
+    flex-flow: wrap;
+    gap: 10px;
+  }
+  .form-group label {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .form-group input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 55px;
+  }
+  .card button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    position: relative;
+    left: 40vh;
+  }
+  .form-group button:hover {
+    background-color: #218838;
+  }
+  .circle {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 70px;
+    height: 70px;
+    background-image: linear-gradient(#c1e9fd, #94c2e0);
+    border-radius: 50%;
+    margin: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .formulas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .formulas h2 {
+    margin: 20px 0px 0px 0px;
+  }
+
+  .formulas p {
+    margin: 20px 0px 0px 0px;
+    font-size: 12pt;
+  }
+
+  .results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* flex-flow: wrap; */
+  }
+
+  .results-part1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-flow: wrap;
+    justify-content: center;
+    font-size: 12pt;
+    margin: auto;
+  }
+
+  .results-part2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-flow: wrap;
+    justify-content: center;
+    gap: 30px;
+    font-size: 12pt;
+    margin: auto;
+  }
+
+  .formula-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 8pt;
+  }
+  .formula-table th, .formula-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  .formula-table th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+  }
+  .results p {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 0;
+  }

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Composition Calculator</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+    <script>
+        MathJax = {
+            tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]},
+            svg: {fontCache: 'global'}
+        };
+    </script>
+    <script id="MathJax-script" async src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Калькулятор 2</h1>
+    <div class="grid">
+      <!-- Input Section -->
+      <div class="card">
+        <h2>Постановка задачі:</h2>
+        <p>Веб калькулятор для перерахунку елементарного складу та нижчої теплоти згоряння мазуту 
+            на робочу масу для складу горючої маси мазуту, що задається наступними параметрами: 
+            вуглець, %; водень, %; кисень, %; сірка, %; нижча теплота згоряння горючої маси мазуту, МДж/кг; 
+            вологість робочої маси палива, %; зольність сухої маси, %; вміст ванадію (V), мг/кг.</p>
+      </div>
+
+      <div class="card">
+        <h2>Вхідні дані:</h2>
+        <form action="/calculate2" method="POST">
+            <div class="form-group">
+                <div class="form-group-block">
+                    <label for="Hg">Hg</label>
+                    <input type="text" id="Hg" name="Hg" placeholder="Enter Hg">
+                </div>
+              
+                <div class="form-group-block">
+                    <label for="Cg">Cg</label>
+                    <input type="text" id="Cg" name="Cg" placeholder="Enter Cg">
+                </div>
+        
+                <div class="form-group-block">
+                    <label for="Sg">Sg</label>
+                    <input type="text" id="Sg" name="Sg" placeholder="Enter Sg">
+                </div>
+              
+                <div class="form-group-block">
+                    <label for="Ng">Ng</label>
+                    <input type="text" id="Ng" name="Ng" placeholder="Enter Ng">
+                </div>
+        
+                <div class="form-group-block">
+                    <label for="Og">Og</label>
+                    <input type="text" id="Og" name="Og" placeholder="Enter Og">
+                </div>
+        
+                <div class="form-group-block">
+                    <label for="Wp">Wp</label>
+                    <input type="text" id="Wp" name="Wp" placeholder="Enter Wp">
+                </div>
+        
+                <div class="form-group-block">
+                    <label for="Ac">Ac</label>
+                    <input type="text" id="Ac" name="Ac" placeholder="Enter Ac">
+                </div>
+
+                <div class="form-group-block">
+                    <label for="Qg">Qg</label>
+                    <input type="text" id="Qg" name="Qg" placeholder="Enter Qg">
+                </div>
+
+                <div class="form-group-block">
+                    <label for="Vc">Vc</label>
+                    <input type="text" id="Vc" name="Vc" placeholder="Enter Vc">
+                </div>
+
+            </div>
+            <button type="submit">Розрахувати</button>
+        </form>
+      </div>
+    </div>
+    <div style="padding: 10px;"></div>
+    <div class="flex-bottom">
+        <!-- Formulas Section -->
+        <div class="card formulas">
+            <h2>Формули:</h2>
+            <p>Коефіцієнт для конвертування маси:</p>
+            <table class="formula-table">
+            <thead>
+                <tr>
+                <th>Теплота згоряння</th>
+                <th>Робочої</th>
+                <th>Сухої</th>
+                <th>Горючої</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Робоча</td>
+                    <td>1</td>
+                    <td>\((100 - W_r)/100 \)</td>
+                    <td>\((100 - W_r - A_r)/100\)</td>
+                </tr>
+                <tr>
+                    <td>Суха</td>
+                    <td>\(100/(100 - W_r)\)</td>
+                    <td>1</td>
+                    <td>\((100 - A_d)/100\)</td>
+                </tr>
+                <tr>
+                    <td>Горюча</td>
+                    <td>\(100/(100 - W_r - A_r)\)</td>
+                    <td>\(100/(100 - A_d)\)</td>
+                    <td>1</td>
+                </tr>
+            </tbody>
+            </table>
+
+            <p>Коефіцієнт для конвертування теплоти згоряння:</p>
+            <table class="formula-table">
+            <thead>
+                <tr>
+                <th>Теплота згоряння</th>
+                <th>Робочої</th>
+                <th>Сухої</th>
+                <th>Горючої</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>\(Q_r\)</td>
+                    <td>1</td>
+                    <td>\(Q_d \frac{(100 - W_r)}{100} - 0.025W_r \)</td>
+                    <td>\(Q_{daf} \frac{100 - W_r - A_r}{100} - 0.025W_r\)</td>
+                </tr>
+                <tr>
+                    <td>\(Q_d\)</td>
+                    <td>\((Q_r + 0.025W_r) \frac{100}{100 - W_r}\)</td>
+                    <td>1</td>
+                    <td>\(Q_{daf} \frac{100 - A_d}{100}\)</td>
+                </tr>
+                <tr>
+                    <td>\(Q_{daf}\)</td>
+                    <td>\((Q_r + 0.025W_r) \frac{100}{100 - W_r - A_r}\)</td>
+                    <td>\(Q_d \frac{100}{100 - A_d}\)</td>
+                    <td>1</td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+
+        <!-- Results Section -->
+        <div class="card results">
+            <h2>Розв'язок:</h2>
+            <div class="results-part1">
+                <div>
+                    {{range $_, $el := .Er}}
+                        <div class="circle">{{$el.Title}}<br>{{printf "%.2f" $el.Value}}</div>
+                    {{end}}
+                </div>
+            </div>
+            <div class="results-part2">
+                <p>Qr = {{printf "%.3f" .Qr}}</p>
+            </div>
+        </div>
+    </div>
+  </div>
+</body>
+</html>
