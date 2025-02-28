@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Composition Calculator</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+    <script>
+        MathJax = {
+            tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]},
+            svg: {fontCache: 'global'}
+        };
+    </script>
+    <script id="MathJax-script" async src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Розрахунок валових викидів: {{.Data.OptionTitle}}</h1>
+    <div class="grid">
+      <!-- Input Section -->
+      <div class="card">
+        <h2>Постановка задачі:</h2>
+        <p>Енергоблок з котлом, призначеним для факельного спалювання вугілля з високим
+            вмістом летких, типу газового або довгополуменевого, з рідким шлаковидаленням. Номінальна
+            паропродуктивність котла енергоблока становить 950 т/год, а середня фактична
+            паропродуктивність – 760 т/год. На ньому застосовується ступенева подача повітря та
+            рециркуляція димових газів. Пароперегрівачі котла очищуються при зупинці блока. Для
+            уловлювання твердих частинок використовується електростатичний фільтр типу ЕГА з
+            ефективністю золовловлення 0,985.<br><br>
+            Установки для очищення димових газів від оксидів азоту та сірки відсутні.<br><br>
+            За звітний період використовувалось таке паливо:<br>
+            - донецьке газове вугілля марки ГР – 1.096.363 т;<br>
+            - високосірчистий мазут марки 40 – 70.945 т;<br>
+            - природний газ із газопроводу Уренгой-Ужгород – 84 762 тис. м<sup>3</sup>.</p>
+      </div>
+
+      <!-- Formulas Section -->
+      <div class="card formulas">
+            <h2>Формули:</h2>
+            <p>Формула показника емісії твердих частинок:</p>
+            <p style="font-size: 20px;">\(k_{тв} = \frac{10^6}{Q^r_i} * a_{вин} * \frac{A^r}{(100 - Г_{вин})} * (1 - n_{зу}) + k_{твS}\)</p>
+            <br>
+            <p>Формула валових викидів для твердих частинок:</p>
+            <p style="font-size: 20px;">\(E_{тв} = 10^{-6} * k_{тв} * Q^r_i * B\)</p>
+        </div>
+    </div>
+    <div style="padding: 10px;"></div>
+    <div class="flex-bottom">
+        <div class="card">
+            <h2>Вхідні дані:</h2>
+            <form action="/calculate" method="POST">
+                <div class="form-group">
+                    <div class="form-group-block">
+                        <label for="Hp">{{index .ElTitles.El 0}}</label>
+                        <input type="text" id="Hp" name="Hp" placeholder="Enter Hp">
+                    </div>
+                  
+                    <div class="form-group-block">
+                        <label for="Cp">{{index .ElTitles.El 1}}</label>
+                        <input type="text" id="Cp" name="Cp" placeholder="Enter Cp">
+                    </div>
+            
+                    <div class="form-group-block">
+                        <label for="Sp">{{index .ElTitles.El 2}}</label>
+                        <input type="text" id="Sp" name="Sp" placeholder="Enter Sp">
+                    </div>
+                  
+                    <div class="form-group-block">
+                        <label for="Np">{{index .ElTitles.El 3}}</label>
+                        <input type="text" id="Np" name="Np" placeholder="Enter Np">
+                    </div>
+            
+                    <div class="form-group-block">
+                        <label for="Op">{{index .ElTitles.El 4}}</label>
+                        <input type="text" id="Op" name="Op" placeholder="Enter Op">
+                    </div>
+            
+                    <div class="form-group-block">
+                        <label for="Wp">{{index .ElTitles.El 5}}</label>
+                        <input type="text" id="Wp" name="Wp" placeholder="Enter Wp">
+                    </div>
+            
+                    <div class="form-group-block">
+                        <label for="Ap">{{index .ElTitles.El 6}}</label>
+                        <input type="text" id="Ap" name="Ap" placeholder="Enter Ap">
+                    </div>
+
+                    <div class="form-group-block">
+                        <label for="B">Маса палива (B)</label>
+                        <input type="text" id="B" name="B" placeholder="Enter B">
+                    </div>
+
+                    <div class="form-group-block">
+                        <label for="Q">НТЗ (Q)</label>
+                        <input type="text" id="Q" name="Q" placeholder="Enter Q">
+                    </div>
+
+                    <div class="form-group-block">
+                        <label for="n">Ефективніфсть очищення дим. газів (n)</label>
+                        <input type="text" id="n" name="n" placeholder="Enter n">
+                    </div>
+                </div>
+                <button type="submit">Розрахувати</button>
+            </form>
+          </div>
+
+        <!-- Results Section -->
+        <div class="card results">
+            <h2>Розв'язок:</h2>
+            <div class="results-part1">
+                <!-- 67890- -->
+                <img class="coef-img" src="/static/coefficient.png">
+                <p>{{if .IsAnswered}}k = {{printf "%.2f" $.Data.K}} {{else}} <i>"no answer yet"</i> {{end}}</p>
+            </div>
+            <br>
+            <div class="results-part2">
+                <!-- 7890- -->
+                <img class="vol-img" src="/static/volume.png">
+                <p>{{if .IsAnswered}}E = {{printf "%.2f" $.Data.E}} {{else}} <i>"no answer yet"</i> {{end}}</p>
+            </div>
+        </div>
+    </div>
+  </div>
+</body>
+</html>

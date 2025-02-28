@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Розрахунок валового викиду</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        body div{
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 300px;
+        }
+
+        .container {
+            display: flex;
+            align-items: flex-start;
+            gap: 140px;
+            margin-top: 40px;
+            height: 30vh;
+        }
+
+        .item {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            height: 30vh;
+        }
+
+        .item img {
+            width: 150px; /* Adjust size as needed */
+            height: auto;
+        }
+
+        .button {
+            background-color: green;
+            color: white;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .button:hover {
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <h1>Розрахунок валового викиду</h1>
+
+        <div class="container">
+            <div class="item">
+                <img src="/static/coal.png" alt="Вугілля">
+                <button class="button" onclick="redirectToCalculator(1)">Вугілля</button>
+            </div>
+            <div class="item">
+                <img src="/static/oil.png" alt="Мазут">
+                <button class="button" onclick="redirectToCalculator(2)">Мазут</button>
+            </div>
+            <div class="item">
+                <img src="/static/gas.png" alt="Природний газ">
+                <button class="button" onclick="redirectToCalculator(3)">Природний газ</button>
+            </div>
+            
+            <script>
+                function redirectToCalculator(option) {
+                    window.location.href = "/calculator?option=" + option;
+                }
+            </script>
+        </div>
+    </div>
+
+</body>
+</html>
